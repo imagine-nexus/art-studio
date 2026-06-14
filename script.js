@@ -1,40 +1,44 @@
 /* ═══════════════════════════════════════════════════════════════
-   APP DATA (Embedded to prevent local file CORS errors)
-═══════════════════════════════════════════════════════════════ */
-const appDatabase = [
-  {
-    "name": "AirPen Studio",
-    "version": "v1.0.0",
-    "details": "Realtime Virtual drawing app",
-    "link": "Apps/Airpen.Studio/Air-pen-Studio.html",
-    "logo": "✒️",
-    "color": "#b2ff59"
-  }
-];
-
-/* ═══════════════════════════════════════════════════════════════
-   APP INITIALIZATION
+   APP INITIALIZATION (Fetching app.json)
 ═══════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
-  const grid = document.getElementById('dynamicAppGrid');
-  grid.innerHTML = ''; // Clear container
+  fetch('app.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(apps => {
+      const grid = document.getElementById('dynamicAppGrid');
+      grid.innerHTML = ''; // Clear container
 
-  // Generate the apps directly from the embedded database array
-  appDatabase.forEach(app => {
-    grid.innerHTML += `
-      <div class="app-card">
-        <div class="app-header">
-          <div class="app-icon" style="color: ${app.color};">${app.logo}</div>
-          <div>
-            <h3>${app.name}</h3>
-            <span class="version-tag">${app.version}</span>
+      apps.forEach(app => {
+        // Smart check: If the logo is a URL, render an image. If it's an emoji, render text.
+        const isUrl = app.logo.startsWith('http') || app.logo.includes('/');
+        const logoHtml = isUrl 
+          ? `<img src="${app.logo}" alt="${app.name} logo" style="width: 28px; height: 28px; object-fit: contain; border-radius: 4px;">` 
+          : app.logo;
+
+        grid.innerHTML += `
+          <div class="app-card">
+            <div class="app-header">
+              <div class="app-icon" style="color: ${app.color};">${logoHtml}</div>
+              <div>
+                <h3>${app.name}</h3>
+                <span class="version-tag">${app.version}</span>
+              </div>
+            </div>
+            <p>${app.details}</p>
+            <a href="${app.link}" target="_blank" class="btn btn-primary app-launch-btn">Launch App</a>
           </div>
-        </div>
-        <p>${app.details}</p>
-        <a href="${app.link}" target="_blank" class="btn btn-primary app-launch-btn">Launch App</a>
-      </div>
-    `;
-  });
+        `;
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching apps:', error);
+      document.getElementById('dynamicAppGrid').innerHTML = '<p class="text-muted" style="grid-column: 1 / -1;">Error loading applications. Make sure you are running a local web server (CORS policy blocks local file fetching).</p>';
+    });
 });
 
 /* ═══════════════════════════════════════════════════════════════
@@ -147,7 +151,6 @@ filePicker.addEventListener('change', (e) => {
 ═══════════════════════════════════════════════════════════════ */
 document.getElementById('signOutBtn').addEventListener('click', () => {
   if (confirm("Are you sure you want to sign out?")) {
-    // Navigates the browser window to a real login page URL
     window.location.href = 'login.html'; 
   }
 });
