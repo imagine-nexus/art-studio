@@ -2,9 +2,9 @@
   {
     "name": "AirPen Studio",
     "version": "v1.0.0",
-    "details": "Realtime Virtual drawing app",
+    "details": "Gesture-based drawing studio. Draw, design, and create with nothing but your hands and computer vision.",
     "link": "https://airpen-studio.netlify.app/",
     "logo": "https://airpen-studio.netlify.app/assets/logo.png",
-    "color": "#b2ff59"
+    "colour": "#b2ff59"
   }
 ]
