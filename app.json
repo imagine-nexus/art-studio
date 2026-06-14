@@ -1,0 +1,10 @@
+[
+  {
+    "name": "AirPen Studio",
+    "version": "v1.0.0",
+    "details": "Realtime Virtual drawing app",
+    "link": "https://airpen-studio.netlify.app/",
+    "logo": "https://airpen-studio.netlify.app/assets/logo.png",
+    "color": "#b2ff59"
+  }
+]
