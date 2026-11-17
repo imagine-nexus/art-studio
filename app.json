@@ -6,5 +6,13 @@
     "link": "https://airpen-studio.netlify.app/",
     "logo": "https://airpen-studio.netlify.app/assets/logo.png",
     "colour": "#b2ff59"
+  },
+  {
+    "name": "Frameforge Web",
+    "version": "v1.6.0",
+    "details": "A professional video editing platform. ",
+    "link": "https://frameforge-web.vercel.app/",
+    "logo": "blob:https://chatgpt.com/04f612ec-0c97-48ab-9e5c-9d4edf191427",
+    "colour": "#111015"
   }
 ]
